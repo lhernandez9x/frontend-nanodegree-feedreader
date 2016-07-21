@@ -14,7 +14,6 @@ $(function() {
      * feeds definitions, the allFeeds variable in our application.
      */
     describe('RSS Feeds', function() {
-
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
          * empty. Experiment with this before you get started on
@@ -30,20 +29,20 @@ $(function() {
 
         //Loops through the allFeeds objects and checks to see if url is defined and not empty
         it('should have a url', function() {
-            for (let i = 0; i < allFeeds.length; i++) {
-                var url = allFeeds[i].url;
+            allFeeds.forEach(function(feed){
+                var url = feed.url;
                 expect(url).toBeDefined();
                 expect(url.length).not.toBe(0);
-            }
+            });
         });
 
         //Loops through the allFeeds objects and checks to see if name is defined and not empty
         it('should have a name', function() {
-            for (let i = 0; i < allFeeds.length; i++) {
-                var name = allFeeds[i].name;
-                expect(name).toBeDefined();
-                expect(name.length).not.toBe(0);
-            }
+            allFeeds.forEach(function(feed){
+                var url = feed.name;
+                expect(url).toBeDefined();
+                expect(url.length).not.toBe(0);
+            });
         });
     });
 
@@ -68,7 +67,7 @@ $(function() {
             menu.trigger('click');
             expect(body.hasClass('menu-hidden')).toBeTruthy();
         });
-    })
+    });
 
     /* TODO: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function() {
@@ -76,15 +75,13 @@ $(function() {
         //async beforeEach call to get feed and run tests
         beforeEach(function(done) {
             loadFeed(0, done);
-        })
+        });
 
-        it('should have at least 1 entry in the feed container', function(done) {
-            var feed = $('.feed'),
-                entry = $('.entry');
+        it('should have at least 1 entry in the feed container', function() {
+            var entry = $('.feed .entry');
 
             //Tests that the feed container has at least one child with .entry class
-            expect(feed.children.length).toBeGreaterThan(0);
-            done();
+            expect(entry.length).toBeGreaterThan(0);
         });
     });
 
@@ -108,15 +105,15 @@ $(function() {
                 loadFeed(1, function() {
                     secondFeed = $('.feed').html();
                     done();
-                })
-            })
-        })
+                });
+            });
+        });
 
         it('should change content when loadFeed is called', function(done) {
             
             //Tests that the firstFeed is not equal to secondFeed
             expect(firstFeed != secondFeed).toBe(true);
             done();
-        })
-    })
+        });
+    });
 }());
